@@ -1,23 +1,11 @@
-/* ==========================================================================
-   PERENE — Storymaker de Casamentos
-   JS modular: header, menu, scroll suave, reveal, carrossel, depoimentos,
-   contadores animados, cursor-visor.
-   ========================================================================== */
-
 (function () {
   "use strict";
 
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  /* ---------------------------------------------------------------------
-     Ano atual no rodapé
-  --------------------------------------------------------------------- */
   const yearEl = document.getElementById("currentYear");
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-  /* ---------------------------------------------------------------------
-     Header: estado ao rolar
-  --------------------------------------------------------------------- */
   const header = document.getElementById("siteHeader");
   const setHeaderState = () => {
     if (!header) return;
@@ -26,9 +14,6 @@
   setHeaderState();
   window.addEventListener("scroll", setHeaderState, { passive: true });
 
-  /* ---------------------------------------------------------------------
-     Menu mobile
-  --------------------------------------------------------------------- */
   const menuToggle = document.getElementById("menuToggle");
   const mainNav = document.getElementById("mainNav");
 
@@ -49,9 +34,6 @@
     });
   }
 
-  /* ---------------------------------------------------------------------
-     Scroll suave com offset do header fixo
-  --------------------------------------------------------------------- */
   const navLinks = document.querySelectorAll("[data-nav]");
   navLinks.forEach((link) => {
     link.addEventListener("click", (e) => {
@@ -67,9 +49,6 @@
     });
   });
 
-  /* ---------------------------------------------------------------------
-     Revelação em scroll (fade up com stagger por seção)
-  --------------------------------------------------------------------- */
   const revealEls = document.querySelectorAll("[data-reveal]");
   const groupCounters = new Map();
 
@@ -97,9 +76,6 @@
     revealEls.forEach((el) => el.classList.add("is-visible"));
   }
 
-  /* ---------------------------------------------------------------------
-     Contadores animados (estatísticas)
-  --------------------------------------------------------------------- */
   function formatStatNumber(value, compact) {
     if (compact && value >= 1000000) {
       return (value / 1000000).toFixed(value % 1000000 === 0 ? 0 : 1) + "M";
@@ -125,7 +101,7 @@
     const start = performance.now();
     function tick(now) {
       const progress = Math.min((now - start) / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+      const eased = 1 - Math.pow(1 - progress, 3);
       const current = target * eased;
       el.textContent = prefix + formatStatNumber(current, compact) + suffix;
       if (progress < 1) requestAnimationFrame(tick);
@@ -149,9 +125,6 @@
     statNumbers.forEach((el) => statObserver.observe(el));
   }
 
-  /* ---------------------------------------------------------------------
-     Portfólio: filtros por categoria
-  --------------------------------------------------------------------- */
   const tabButtons = document.querySelectorAll(".tab-btn");
   const portCards = document.querySelectorAll(".port-card");
 
@@ -172,9 +145,6 @@
     });
   });
 
-  /* ---------------------------------------------------------------------
-     Depoimentos: slider automático + manual
-  --------------------------------------------------------------------- */
   const slides = document.querySelectorAll(".testimonial-slide");
   const dotsWrap = document.getElementById("testimonialDots");
   const tsPrev = document.getElementById("tsPrev");
@@ -226,9 +196,6 @@
     }
   }
 
-  /* ---------------------------------------------------------------------
-     Cursor-visor customizado sobre molduras de mídia (desktop, ponteiro fino)
-  --------------------------------------------------------------------- */
   const vfCursor = document.getElementById("vfCursor");
   const isFinePointer = window.matchMedia("(pointer: fine)").matches;
 
@@ -253,9 +220,6 @@
     });
   }
 
-  /* ---------------------------------------------------------------------
-     Parallax leve na imagem do hero
-  --------------------------------------------------------------------- */
   const parallaxEl = document.querySelector("[data-parallax]");
   if (parallaxEl && !prefersReducedMotion) {
     window.addEventListener(
